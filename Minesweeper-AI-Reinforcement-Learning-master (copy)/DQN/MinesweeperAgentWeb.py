@@ -111,17 +111,17 @@ class MinesweeperAgentWeb(object):
                 tiles.append({'coord': (coord[0], coord[1]), 'value': value})
 
         tiles = sorted(tiles, key=lambda x: (x['coord'][1], x['coord'][0]))
-        print(tiles)
+        # print(tiles)
 
         i=0
         for x in range(self.nrows):
             for y in range(self.ncols):
-                print()
-                print(f"i:{i} (y,x):{(y,x)}")
+                # print()
+                # print(f"i:{i} (y,x):{(y,x)}")
                 tiles[i]['index'] = (y, x)
-                print(f"{tiles[i]['index']=}")
-                print(f"{len(tiles)=}")
-                print(f"{tiles[i]['value']=}")
+                # print(f"{tiles[i]['index']=}")
+                # print(f"{len(tiles)=}")
+                # print(f"{tiles[i]['value']=}")
                 i+=1
 
         return tiles

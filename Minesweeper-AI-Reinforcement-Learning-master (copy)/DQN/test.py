@@ -28,9 +28,15 @@ def main():
         done = False
         while not done:
             current_state = agent.state
+            print("current_state")
+            print(current_state)
             action = agent.get_action(current_state)
+            print("action:")
+            print(action)
 
             new_state, done = agent.step(action)
+            print("new_state")
+            print(new_state)
 
 if __name__ == "__main__":
     main()

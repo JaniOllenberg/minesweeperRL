@@ -29,12 +29,12 @@ EPSILON_DECAY = 0.99975
 EPSILON_MIN = 0.01
 
 # DQN settings
-CONV_UNITS = 512 # number of neurons in each conv layer
+CONV_UNITS = 128 # number of neurons in each conv layer
 DENSE_UNITS = 512 # number of neurons in fully connected dense layer
 UPDATE_TARGET_EVERY = 5
 
 # Default model name
-MODEL_NAME = f'conv{CONV_UNITS}x5_dense{DENSE_UNITS}x3_y{DISCOUNT}_minlr{LEARN_MIN}'
+MODEL_NAME = f'conv{CONV_UNITS}x4_dense{DENSE_UNITS}x2_y{DISCOUNT}_minlr{LEARN_MIN}'
 
 class DQNAgent(object):
     def __init__(self, env, model_name=MODEL_NAME, conv_units=64, dense_units=256):

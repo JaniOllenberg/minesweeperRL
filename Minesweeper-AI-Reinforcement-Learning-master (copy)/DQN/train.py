@@ -14,7 +14,7 @@ def parse_args():
                         help='height of the board')
     parser.add_argument('--n_mines', type=int, default=10,
                         help='Number of mines on the board')
-    parser.add_argument('--episodes', type=int, default=100_000,
+    parser.add_argument('--episodes', type=int, default=1_000_000,
                         help='Number of episodes to train on')
     parser.add_argument('--model_name', type=str, default=f'{MODEL_NAME}',
                         help='Name of model')
@@ -23,8 +23,8 @@ def parse_args():
 
 params = parse_args()
 
-AGG_STATS_EVERY = 10 # calculate stats every 100 games for tensorboard
-SAVE_MODEL_EVERY = 250 # save model and replay every 10,000 episodes
+AGG_STATS_EVERY = 100 # calculate stats every 100 games for tensorboard
+SAVE_MODEL_EVERY = 500 # save model and replay every 10,000 episodes
 
 def main():
     #env = MinesweeperEnv(params.width, params.height, params.n_mines)
