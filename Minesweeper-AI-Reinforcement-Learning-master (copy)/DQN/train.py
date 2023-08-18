@@ -35,7 +35,7 @@ def main():
     n_clicks = 0
 
     for episode in tqdm(range(1, params.episodes+1), unit='episode'):
-        #agent.tensorboard.step = episode
+        agent.tensorboard.step = episode
 
         env.reset()
         episode_reward = 0
@@ -72,12 +72,12 @@ def main():
             win_rate = round(np.sum(wins_list[-AGG_STATS_EVERY:]) / AGG_STATS_EVERY, 2)
             med_reward = round(np.median(ep_rewards[-AGG_STATS_EVERY:]), 2)
 
-            #agent.tensorboard.update_stats(
-            #    progress_med = med_progress,
-            #    winrate = win_rate,
-            #    reward_med = med_reward,
-            #    learn_rate = agent.learn_rate,
-            #    epsilon = agent.epsilon)
+            agent.tensorboard.update_stats(
+                progress_med = med_progress,
+                winrate = win_rate,
+                reward_med = med_reward,
+                learn_rate = agent.learn_rate,
+                epsilon = agent.epsilon)
 
             print(f'Episode: {episode}, Median progress: {med_progress}, Median reward: {med_reward}, Win rate : {win_rate}')
 

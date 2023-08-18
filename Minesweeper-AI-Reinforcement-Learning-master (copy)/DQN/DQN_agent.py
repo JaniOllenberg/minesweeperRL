@@ -34,10 +34,10 @@ DENSE_UNITS = 512 # number of neurons in fully connected dense layer
 UPDATE_TARGET_EVERY = 5
 
 # Default model name
-MODEL_NAME = f'conv{CONV_UNITS}x4_dense{DENSE_UNITS}x2_y{DISCOUNT}_minlr{LEARN_MIN}'
+MODEL_NAME = f'conv{CONV_UNITS}x4_dense{DENSE_UNITS}x2_y{DISCOUNT}_minlr{LEARN_MIN}_beginner'
 
 class DQNAgent(object):
-    def __init__(self, env, model_name=MODEL_NAME, conv_units=64, dense_units=256):
+    def __init__(self, env, model_name=MODEL_NAME, conv_units=128, dense_units=512):
         self.env = env
 
         # Deep Q-learning Parameters
@@ -55,8 +55,8 @@ class DQNAgent(object):
         self.replay_memory = deque(maxlen=MEM_SIZE)
         self.target_update_counter = 0
 
-        #self.tensorboard = ModifiedTensorBoard(
-        #    log_dir=f'logs\\{model_name}', profile_batch=0)
+        self.tensorboard = ModifiedTensorBoard(
+            log_dir=f'logs\\{model_name}', profile_batch=0)
 
     def get_action(self, state):
         board = state.reshape(1, self.env.ntiles)
@@ -103,12 +103,12 @@ class DQNAgent(object):
             X.append(current_state)
             y.append(current_qs)
 
-#        self.model.fit(np.array(X), np.array(y), batch_size=BATCH_SIZE,
-#                       shuffle=False, verbose=0, callbacks=[self.tensorboard]\
-#                       if done else None)
-
         self.model.fit(np.array(X), np.array(y), batch_size=BATCH_SIZE,
-                       shuffle=False, verbose=0, callbacks = None)
+                       shuffle=False, verbose=0, callbacks=[self.tensorboard]\
+                       if done else None)
+
+#        self.model.fit(np.array(X), np.array(y), batch_size=BATCH_SIZE,
+#                       shuffle=False, verbose=0, callbacks = None)
 
         # updating to determine if we want to update target_model yet
         if done:
@@ -126,3 +126,4 @@ class DQNAgent(object):
 
 if __name__ == "__main__":
     DQNAgent(MinesweeperEnv(8,8,10))
+    #DQNAgent(MinesweeperEnv(16,30,99))

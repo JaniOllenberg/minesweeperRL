@@ -75,6 +75,7 @@ class MinesweeperAgentWeb(object):
                 loc = boards[mode]
                 dims = modes[mode]
 
+        print(f"diff:{diff}\nloc:{loc}\ndims:{dims}")
         return diff, loc, dims
 
     def get_tiles(self, tile, bbox):
