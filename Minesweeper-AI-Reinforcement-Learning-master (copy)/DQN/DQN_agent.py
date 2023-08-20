@@ -46,11 +46,13 @@ class DQNAgent(object):
         self.epsilon = epsilon
         self.model = create_dqn(
             self.learn_rate, self.env.state_im.shape, self.env.ntiles, conv_units, dense_units)
+        self.model.summary()
 
         # target model - this is what we predict against every step
         self.target_model = create_dqn(
             self.learn_rate, self.env.state_im.shape, self.env.ntiles, conv_units, dense_units)
         self.target_model.set_weights(self.model.get_weights())
+        self.target_model.summary()
 
         self.replay_memory = deque(maxlen=MEM_SIZE)
         self.target_update_counter = 0
