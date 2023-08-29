@@ -19,14 +19,14 @@ MEM_SIZE_MIN = 1_000 # min number of moves in replay buffer
 # Learning settings
 BATCH_SIZE = 64
 learn_rate = 0.01
-LEARN_DECAY = 0.99975
+LEARN_DECAY = 0.999975
 LEARN_MIN = 0.001
 DISCOUNT = 0.1 #gamma
 
 # Exploration settings
 epsilon = 0.95
-EPSILON_DECAY = 0.99975
-EPSILON_MIN = 0.01
+EPSILON_DECAY = 0.999975
+EPSILON_MIN = 0.20
 
 # DQN settings
 CONV_UNITS = 128 # number of neurons in each conv layer
@@ -34,7 +34,7 @@ DENSE_UNITS = 512 # number of neurons in fully connected dense layer
 UPDATE_TARGET_EVERY = 5
 
 # Default model name
-MODEL_NAME = f'conv{CONV_UNITS}x4_dense{DENSE_UNITS}x2_y{DISCOUNT}_minlr{LEARN_MIN}_beginner_batch{BATCH_SIZE}'
+MODEL_NAME = f'conv{CONV_UNITS}x4_dense{DENSE_UNITS}x2_y{DISCOUNT}_minlr{LEARN_MIN}_beginner_batch{BATCH_SIZE}_decay0999975_mine{EPSILON_MIN}'
 
 class DQNAgent(object):
     def __init__(self, env, model_name=MODEL_NAME, conv_units=128, dense_units=512):
