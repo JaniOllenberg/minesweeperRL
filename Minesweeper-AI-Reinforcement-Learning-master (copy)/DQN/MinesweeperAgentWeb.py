@@ -5,7 +5,7 @@ import pyautogui as pg
 ROOT = os.getcwd()
 IMGS = f'{ROOT}/pics_windows'
 
-EPSILON = 0.01
+EPSILON = 0.8
 
 CONFIDENCES = {
     'unsolved': 0.99,
@@ -115,11 +115,11 @@ class MinesweeperAgentWeb(object):
         # print(tiles)
 
         i=0
-        for x in range(self.nrows):
-            for y in range(self.ncols):
+        for row in range(self.nrows):
+            for column in range(self.ncols):
                 # print()
                 # print(f"i:{i} (y,x):{(y,x)}")
-                tiles[i]['index'] = (y, x)
+                tiles[i]['index'] = (row, column)
                 # print(f"{tiles[i]['index']=}")
                 # print(f"{len(tiles)=}")
                 # print(f"{tiles[i]['value']=}")
@@ -150,13 +150,16 @@ class MinesweeperAgentWeb(object):
 
         rand = np.random.random() # random value b/w 0 & 1
 
-        if rand < self.epsilon: # random move (explore)
-            move = np.random.choice(unsolved)
-        else:
-            moves = self.model.predict(np.reshape(self.state, (1, self.nrows, self.ncols, 1)))
-            moves[board!=-0.125] = np.min(moves)
-            move = np.argmax(moves)
+        #if rand < self.epsilon: # random move (explore)
+        #    move = np.random.choice(unsolved)
+        #    print("random move!")
+        #else:
+        moves = self.model.predict(np.reshape(self.state, (1, self.nrows, self.ncols, 1)))
+        moves[board!=-0.125] = np.min(moves)
+        move = np.argmax(moves)
 
+        print("predicted moves:")
+        print(moves)
         return move
 
     def get_neighbors(self, action_index):
@@ -185,7 +188,7 @@ class MinesweeperAgentWeb(object):
         #self.n_solved = self.n_solved_
 
         # get neighbors before clicking
-        neighbors = self.get_neighbors(action_index)
+        # neighbors = self.get_neighbors(action_index)
 
         pg.click(self.board[action_index]['coord'])
 

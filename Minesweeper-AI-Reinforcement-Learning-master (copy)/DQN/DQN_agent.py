@@ -25,19 +25,19 @@ DISCOUNT = 0.1 #gamma
 
 # Exploration settings
 epsilon = 0.95
-EPSILON_DECAY = 0.999975
-EPSILON_MIN = 0.20
+EPSILON_DECAY = 0.99975
+EPSILON_MIN = 0.01
 
 # DQN settings
 CONV_UNITS = 128 # number of neurons in each conv layer
-DENSE_UNITS = 512 # number of neurons in fully connected dense layer
+DENSE_UNITS = 256 # number of neurons in fully connected dense layer
 UPDATE_TARGET_EVERY = 5
 
 # Default model name
-MODEL_NAME = f'conv{CONV_UNITS}x4_dense{DENSE_UNITS}x2_y{DISCOUNT}_minlr{LEARN_MIN}_beginner_batch{BATCH_SIZE}_decay0999975_mine{EPSILON_MIN}'
+MODEL_NAME = f'convx{CONV_UNITS}x2_dense{DENSE_UNITS}x2_y{DISCOUNT}_minlr{LEARN_MIN}_beginner_batch{BATCH_SIZE}_decay0999975_mine{EPSILON_MIN}'
 
 class DQNAgent(object):
-    def __init__(self, env, model_name=MODEL_NAME, conv_units=128, dense_units=512):
+    def __init__(self, env, model_name=MODEL_NAME, conv_units=128, dense_units=128):
         self.env = env
 
         # Deep Q-learning Parameters
@@ -51,6 +51,8 @@ class DQNAgent(object):
         # target model - this is what we predict against every step
         self.target_model = create_dqn(
             self.learn_rate, self.env.state_im.shape, self.env.ntiles, conv_units, dense_units)
+        # reload model
+        # self.model.load_weights(f'models/{MODEL_NAME}.h5')
         self.target_model.set_weights(self.model.get_weights())
         self.target_model.summary()
 
@@ -72,7 +74,6 @@ class DQNAgent(object):
             moves = self.model.predict(np.reshape(state, (1, self.env.nrows, self.env.ncols, 1)))
             moves[board!=-0.125] = np.min(moves) # set already clicked tiles to min value
             move = np.argmax(moves)
-
         return move
 
     def update_replay_memory(self, transition):
