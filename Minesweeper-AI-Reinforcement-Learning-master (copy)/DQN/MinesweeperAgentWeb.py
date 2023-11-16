@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import pyautogui as pg
+import GPU_disable
 
 ROOT = os.getcwd()
 IMGS = f'{ROOT}/pics_windows'
@@ -39,9 +40,10 @@ TILES2 = {
 class MinesweeperAgentWeb(object):
     def __init__(self, model):
         #pg.click((10,100)) # click on current tab so 'F2' resets the game
-        game_window = pg.locateCenterOnScreen(f'{IMGS}/game_window.png', confidence=0.95)
+        game_window = pg.locateCenterOnScreen(f'{IMGS}/game_window.png', confidence=0.85)
+        print(game_window)
         if(game_window == None):
-        	game_window = pg.locateOnScreen(f'{IMGS}/game_window_beginner.png', confidence=0.90)
+        	game_window = pg.locateOnScreen(f'{IMGS}/game_window_beginner.png', confidence=0.80)
         print(game_window)
         pg.click(game_window)
         self.reset()
@@ -63,10 +65,10 @@ class MinesweeperAgentWeb(object):
         obtain mode, screen coordinates and dimensions for Minesweeper board
         '''
 
-        modes = {'beginner':(8,8,64), 'intermediate':(16,16,256), 'expert':(16,30,480)}
+        modes = {'custom':(3,3,9), 'beginner':(8,8,64), 'intermediate':(16,16,256), 'expert':(16,30,480)}
         boards = {mode: pg.locateOnScreen(f'{IMGS}/{mode}.png', confidence=0.92) for mode in modes.keys()}
 
-        assert boards != {'beginner':None, 'intermediate':None, 'expert':None},\
+        assert boards != {'beginner':None, 'intermediate':None, 'expert':None, 'custom':None},\
             'Minesweeper board not detected on screen'
 
         for mode in boards.keys():

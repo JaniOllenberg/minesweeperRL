@@ -2,6 +2,7 @@ import argparse, pickle
 from tqdm import tqdm
 from keras.models import load_model
 from resume_DQN_agent import *
+# import GPU_disable
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
@@ -33,7 +34,11 @@ def main():
     progress_list, wins_list, ep_rewards = [], [], []
     n_clicks = 0
 
-    for episode in tqdm(range(1, params.episodes+1), unit='episode'):
+    # start_from = 276501
+    with open(f'replay/{MODEL_NAME}_episode.pkl', 'rb') as f:
+        start_from = pickle.load(f)
+
+    for episode in tqdm(range(start_from, params.episodes+1), unit='episode'):
         agent.tensorboard.step = episode
 
         env.reset()
@@ -85,6 +90,9 @@ def main():
                 pickle.dump(agent.replay_memory, output)
 
             agent.model.save(f'models/{MODEL_NAME}.h5')
+
+            with open(f'replay/{MODEL_NAME}_episode.pkl', 'wb') as output:
+                pickle.dump(episode, output)
 
 if __name__ == "__main__":
     main()

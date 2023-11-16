@@ -11,16 +11,17 @@ from minesweeper_env import *
 # use my_tensorboard2.py if using tensorflow v2+, use my_tensorboard.py otherwise
 from my_tensorboard2 import *
 from DQN import *
+import pickle
 
 # Environment settings
 MEM_SIZE = 100_000 # number of moves to store in replay buffer
 MEM_SIZE_MIN = 4_000 # min number of moves in replay buffer
 
 # Learning settings
-BATCH_SIZE = 256 
-learn_rate = 0.001
+BATCH_SIZE = 128 
+learn_rate = 0.01
 LEARN_DECAY = 0.999975
-LEARN_MIN = 0.001
+LEARN_MIN = 0.01
 DISCOUNT = 0.1 #gamma
 
 # Exploration settings
@@ -38,7 +39,7 @@ UPDATE_TARGET_EVERY = 5
 MODEL_NAME = f'conv512x4_dense512x2_y0.1_minlr0.001_beginner_batch64_decay0999975'
 
 class DQNAgent(object):
-    def __init__(self, env, model_name=MODEL_NAME, conv_units=512, dense_units=512):
+    def __init__(self, env, model_name=MODEL_NAME, conv_units=CONV_UNITS, dense_units=DENSE_UNITS):
         self.env = env
 
         # Deep Q-learning Parameters
@@ -58,6 +59,10 @@ class DQNAgent(object):
         self.target_model.summary()
 
         self.replay_memory = deque(maxlen=MEM_SIZE)
+        # reload replay_memory
+        with open(f'replay/{MODEL_NAME}.pkl', 'rb') as f:
+            self.replay_memory = pickle.load(f)
+
         self.target_update_counter = 0
 
         self.tensorboard = ModifiedTensorBoard(
