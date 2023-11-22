@@ -185,6 +185,7 @@ class MinesweeperAgentWeb(object):
 
     def step(self, action_index):
         done = False
+        game_won = False
 
         # number of solved tiles prior to move (initialized at 0)
         #self.n_solved = self.n_solved_
@@ -192,17 +193,21 @@ class MinesweeperAgentWeb(object):
         # get neighbors before clicking
         # neighbors = self.get_neighbors(action_index)
 
+        x, y = pg.position()
         pg.click(self.board[action_index]['coord'])
+        pg.moveTo(x,y)
 
         if pg.locateOnScreen(f'{IMGS}/oof.png', region=self.loc) != None: # if lose
             print(f"Game lost!------------------------")
             done = True
+            game_won = False 
 
         elif pg.locateOnScreen(f'{IMGS}/gg.png', region=self.loc) != None: # if win
             done = True
+            game_won = True
 
         else: # if progress
             self.board = self.get_board(self.loc)
             self.state = self.get_state(self.board)
 
-        return self.state, done
+        return self.state, done, game_won

@@ -19,9 +19,9 @@ MEM_SIZE_MIN = 4_000 # min number of moves in replay buffer
 
 # Learning settings
 BATCH_SIZE = 128 
-learn_rate = 0.01
+learn_rate = 0.001
 LEARN_DECAY = 0.999975
-LEARN_MIN = 0.01
+LEARN_MIN = 0.001
 DISCOUNT = 0.1 #gamma
 
 # Exploration settings
