@@ -14,11 +14,11 @@ from DQN import *
 import pickle
 
 # Environment settings
-MEM_SIZE = 100_000 # number of moves to store in replay buffer
+MEM_SIZE = 300_000 # number of moves to store in replay buffer
 MEM_SIZE_MIN = 4_000 # min number of moves in replay buffer
 
 # Learning settings
-BATCH_SIZE = 128 
+BATCH_SIZE = 1024 
 learn_rate = 0.001
 LEARN_DECAY = 0.999975
 LEARN_MIN = 0.001
